@@ -1,0 +1,20 @@
+<%- include("./partials/header") %> 
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+    <div class="container">
+        <!-- <h1>J00X</h1> -->
+        <img src="/img/music.gif" alt="icon">
+        <form action="/download" method="post">
+            <div>
+                <input type="text" name="songUrl" id="songUrl" value="" placeholder="Song Url" required />
+            </div>
+            <div>
+                <button>Download</button>
+            </div>
+        </form>
+    </div>
+
+
+<%- include("./partials/footer") %> 
