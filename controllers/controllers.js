@@ -17,7 +17,24 @@ exports.postDownload = (req, res, next) => {
     fetch(jooxAPI)
         .then(res => res.json())
         .then(datas => {
-            res.send("Done")
+            filePath = path.join("data", datas.name + ".mp3")
+            songName = datas.name;
+            singerName = datas.artist_list[0].name
+
+            fetch(datas.play_url.low_play_url)
+                .then(resp => {
+                    const file = fs.createWriteStream(filePath);
+                    resp.body.pipe(file);
+                    file.on("finish", () => {
+                        const audio = fs.createReadStream(filePath);
+                        res.setHeader("Content-Type", "audio/mpeg");
+                        res.setHeader("Content-Disposition", `attachment; filename=${encodeURI(songName)} - ${singerName}.mp3`)
+                        audio.pipe(res);
+                    })
+                })
+                .catch(err => console.log(err))
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            res.send(err)
+        })
 }
