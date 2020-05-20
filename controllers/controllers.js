@@ -14,5 +14,10 @@ exports.postDownload = (req, res, next) => {
     let songName;
     let singerName;
 
-    res.send("Post Download")
+    fetch(jooxAPI)
+        .then(res => res.json())
+        .then(datas => {
+            res.send("Done")
+        })
+        .catch(err => console.log(err))
 }
